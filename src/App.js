@@ -1,6 +1,7 @@
 /* eslint-disable */
 import { Button, Navbar, Container, Nav, Row, Col } from "react-bootstrap";
 import { useState } from "react";
+import { Routes, Route, Link } from "react-router-dom";
 
 // import 작명 from '이미지 경로';
 
@@ -18,6 +19,7 @@ import "./App.css";
 // 현재경로를 다 가져와주는거 > {process.env.PUBLIC_URL + '/logo.png'} < 이게 public폴더 이미지 쓰는 권장 방식
 
 import data from "./data.js";
+import Detail from "./Detail.js";
 
 function App() {
   let [shoes] = useState(data);
@@ -38,50 +40,33 @@ function App() {
         </Container>
       </Navbar>
 
-      <div className="main-bg"></div>
-      {/* <Container>
-        <Row>
-          <Col md="4">
-            <img
-              src="https://codingapple1.github.io/shop/shoes1.jpg"
-              width="80%"
-            />
-            <h4>상품명</h4>
-            <p>상품설명</p>
-          </Col>
-          <Col md="4">
-            <img
-              src="https://codingapple1.github.io/shop/shoes1.jpg"
-              width="80%"
-            />
-            <h4>상품명</h4>
-            <p>상품설명</p>
-          </Col>
-          <Col md="4">
-            <img
-              src="https://codingapple1.github.io/shop/shoes1.jpg"
-              width="80%"
-            />
-            <h4>상품명</h4>
-            <p>상품설명</p>
-          </Col>
-        </Row>
-      </Container> */}
-      <div class="container ">
-        <div className="row">
-          {/* <Product shoes={shoes} img={이미지} /> */}
-          {shoes.map((a, i) => {
-            return (
-              // <div class="col-md-4">
-              //   <img src={shoes[i].img} width="80%" />
-              //   <h4>{shoes[i].title}</h4>
-              //   <p>{shoes[i].price}</p>
-              // </div>
-              <Product index={i} shoes={shoes} />
-            );
-          })}
-        </div>
-      </div>
+      <Link to="/">홈으로</Link>
+      <Link to="/detail">상세페이지로</Link>
+      {/* 페이지 이동버튼은 <Link></Link>
+to = 경로 */}
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <>
+              <div className="main-bg"></div>
+              <div class="container ">
+                <div className="row">
+                  {/* <Product shoes={shoes} img={이미지} /> */}
+                  {shoes.map((a, i) => {
+                    return <Product index={i} shoes={shoes} />;
+                  })}
+                </div>
+              </div>
+            </>
+          }
+        />
+        <Route path="/detail" element={Detail} />
+        {/* 이게 페이지임, path="경로"
+        이 detail 로 접속했을 때 보여줄 html을 element에 씀
+        메인페이지로 접속했을때 : path="/"
+        */}
+      </Routes>
     </div>
   );
 }
@@ -147,6 +132,9 @@ react는 SPA라서 html파일을 하나밖에 사용을 안함 (index.html)
   (페이지 구분 - routing)
     ㄴ index.js에 가서 <App/>을 <BrowserRouter>컴포넌트로 감싸면 끝.
 
+
+    > Routes, Route
+    - Route가 페이지임
 
 
 */
