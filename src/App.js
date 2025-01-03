@@ -117,12 +117,36 @@ function Product(props) {
   <img src={'https://codingapple1.github.io/shop/shoes'+props.i+'.jpg'} width="80%" />
   이렇게 출력해도 됨.
 
-  >>> 이렇게 하면 map을
+  >>> 이렇게 하면 map을 이렇게
 
   shoes.map((a, i)=>{
     return(
-      <Product shoes={shoes[0]} i={1}/> 
+      <Product shoes={shoes[0]} i={i}/> 
     )
     })
+
+    i = 0 1 2 ... 이렇게 가는데 우리가 필요한건 1 2 3 ... 이니까
+
+    function() Card(props){
+    <img src={'https:/~~'+(props.i+1) <<< 여기서 i+1로 해줬음.
+    }
 */
 export default App;
+
+/* ================== 라우트 ====================
+react는 SPA라서 html파일을 하나밖에 사용을 안함 (index.html)
+
+ > 리액트 사용 안한 경우
+  ㄴ html파일을 만들어서 상세페이지 내용을 채움
+  ㄴ 누가 /detail로 접속하면 detail.html을 보여줌
+ 
+  > 리액트 사용한 경우 ☆ 
+  ㄴ detail 컴포넌트를 만들어서 상세페이지 내용을 채움
+  ㄴ 누가 /detail로 접속하면 기존 html을 싹 비우고 detail 컴포넌트를 보여줌
+  (이걸 코드로 짤 수 있지만 길어지고 귀찮으니 일반적으로 react-router-dom이라는 라이브러리를 쓴다)
+  (페이지 구분 - routing)
+    ㄴ index.js에 가서 <App/>을 <BrowserRouter>컴포넌트로 감싸면 끝.
+
+
+
+*/
