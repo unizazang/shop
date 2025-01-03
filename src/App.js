@@ -99,5 +99,30 @@ function Product(props) {
     </div>
   );
 }
+/* 답...=======================
+  똑같은 컴포넌트인데 내용을 다르게 보여주고 싶으면 props를 이용하면 된다!!!
+  각각 다른 내용의 props로 전송해주면 되는거.
 
+  <Product shoes={shoes[0]}>
+  <Product shoes={shoes[1]}>
+  <Product shoes={shoes[2]}>
+  이렇게 해줘도 됨.
+
+  >> 이러면 각각 shoes에는 각 자리의 슈즈가 들어있으니까
+  불러서 쓸때는 props.shoes.title 이렇게만 해도 됨
+
+  img는 링크가 shoes1 shoes2 shoes3 이었으니까
+
+  <Product shoes={shoes[0]} i={1}/> 이렇게 보내고
+  <img src={'https://codingapple1.github.io/shop/shoes'+props.i+'.jpg'} width="80%" />
+  이렇게 출력해도 됨.
+
+  >>> 이렇게 하면 map을
+
+  shoes.map((a, i)=>{
+    return(
+      <Product shoes={shoes[0]} i={1}/> 
+    )
+    })
+*/
 export default App;
