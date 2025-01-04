@@ -78,7 +78,7 @@ to = 경로 */}
             </>
           }
         />
-        <Route path="/detail" element={<Detail />} />
+        <Route path="/detail" element={<Detail shoes={shoes} />} />
         {/* Detail로 그냥 import했을때 <Detail /> 이렇게 넣기 가능!!!!
         
         어? 왜지? 내가 Detail 로 쓰면 되는데 <Detail />은 오류가 뜬다. */}
