@@ -70,7 +70,6 @@ to = 경로 */}
               <div className="main-bg"></div>
               <div class="container ">
                 <div className="row">
-                  {/* <Product shoes={shoes} img={이미지} /> */}
                   {shoes.map((a, i) => {
                     return <Product index={i} shoes={shoes} />;
                   })}
