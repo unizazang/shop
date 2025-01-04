@@ -36,7 +36,16 @@ function App() {
         <Container>
           <Navbar.Brand href="#home">C Shop</Navbar.Brand>
           <Nav className="me-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
+            <Nav.Link
+              onClick={() => {
+                navigate("/");
+                // 여기 입력한 경로로 이동시켜줌
+                // navigate(1) > 앞으로 한 페이지 이동해주세요
+                // navigate(-1) > 뒤로 한 페이지 이동해주세요 (뒤로가기)
+              }}
+            >
+              HOME
+            </Nav.Link>
             <Nav.Link
               onClick={() => {
                 navigate("/detail");
@@ -70,7 +79,7 @@ to = 경로 */}
             </>
           }
         />
-        <Route path="/detail" element={Detail} />
+        <Route path="/detail" element={<Detail />} />
         {/* Detail로 그냥 import했을때 <Detail /> 이렇게 넣기 가능!!!!
         
         어? 왜지? 내가 Detail 로 쓰면 되는데 <Detail />은 오류가 뜬다. */}
@@ -78,7 +87,48 @@ to = 경로 */}
         이 detail 로 접속했을 때 보여줄 html을 element에 씀
         메인페이지로 접속했을때 : path="/"
         */}
+
+        <Route path="*" element={<div>없는페이지요</div>} />
+        {/* path="*" < 위에 만들어놓은 라우트 외에 모든것. */}
+
+        <Route path="/about" element={<About />}>
+          <Route path="member" element={<div>멤버임</div>} />
+          <Route path="location" element={<div>위치정보임</div>} />
+        </Route>
+
+        {/* 경로 뒤에 슬래시 몇개인건 전혀 상관이 없음 */}
       </Routes>
+      {/* ============ Nested Route ===============
+
+        /about 뿐 아니라 /about/member /about/location  이런식으로... 만들고 싶을때
+
+        <Route path="/about" element={<About />} />
+        <Route path="/about/member" element={<About />} />
+        <Route path="/about/location" element={<About />} /> 이렇게 해도 되지만
+
+        장점 > nested route 접속하면 element 2개 보임
+        <Route path="/about" element={<About1 />}>
+          <Route path="member" element={<About2  />} /> 이거 두개가 다 보임
+
+          근데 nested route는 이 어바웃의 어디에 보여줄건지를 작성을 해줘야 보인다. 위애꺼 내부에 보여주기 때문에...(부모 안에다가 보여줌)
+          About 안에 작성
+          > 아웃렛이라고 작성 - nested route 안에 있는걸 보여줄 자리. 그 컴포넌트 안에 넣어놔야함
+
+
+          이거 언제씀?
+          > 여러 유사한 페이지가 필요할 때
+
+          
+*/}
+    </div>
+  );
+}
+
+function About() {
+  return (
+    <div>
+      <h4>회사정보임</h4>
+      <Outlet></Outlet>
     </div>
   );
 }
@@ -148,5 +198,9 @@ react는 SPA라서 html파일을 하나밖에 사용을 안함 (index.html)
     > Routes, Route
     - Route가 페이지임
 
+
+    Router 장점
+    1. 뒤로가기 버튼 만들수있음
+    2. 페이지 이동이 쉬움 (UI 스위치 조작이 쉬움)
 
 */
