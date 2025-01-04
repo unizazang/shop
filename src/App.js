@@ -1,7 +1,7 @@
 /* eslint-disable */
 import { Button, Navbar, Container, Nav, Row, Col } from "react-bootstrap";
 import { useState } from "react";
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route, Link, useNavigate, Outlet } from "react-router-dom";
 
 // import 작명 from '이미지 경로';
 
@@ -26,6 +26,9 @@ function App() {
   // 너무 기니까 다른파일로 뺄수있음 > export, import 해야함
   // 이 변수는 함수 안에넣어야함!!!!!!!!!!!!!!☆☆☆☆☆
 
+  // use어쩌구 ~ > Hook임.
+  let navigate = useNavigate(); //이 안에는 페이지 이동을 도와주는 함수 하나가 들어있습니다. 이걸 변수에 저장해서 씀
+
   return (
     <div className="App">
       {/* 갖다 쓰려면 component 를 import 해야함 */}
@@ -34,8 +37,14 @@ function App() {
           <Navbar.Brand href="#home">C Shop</Navbar.Brand>
           <Nav className="me-auto">
             <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#features">Features</Nav.Link>
-            <Nav.Link href="#pricing">Pricing</Nav.Link>
+            <Nav.Link
+              onClick={() => {
+                navigate("/detail");
+                // 여기 입력한 경로로 이동시켜줌
+              }}
+            >
+              Detail
+            </Nav.Link>
           </Nav>
         </Container>
       </Navbar>
@@ -62,6 +71,9 @@ to = 경로 */}
           }
         />
         <Route path="/detail" element={Detail} />
+        {/* Detail로 그냥 import했을때 <Detail /> 이렇게 넣기 가능!!!!
+        
+        어? 왜지? 내가 Detail 로 쓰면 되는데 <Detail />은 오류가 뜬다. */}
         {/* 이게 페이지임, path="경로"
         이 detail 로 접속했을 때 보여줄 html을 element에 씀
         메인페이지로 접속했을때 : path="/"
