@@ -58,8 +58,8 @@ function App() {
         </Container>
       </Navbar>
 
-      <Link to="/">홈으로</Link>
-      <Link to="/detail">상세페이지로</Link>
+      {/* <Link to="/">홈으로</Link>
+      <Link to="/detail">상세페이지로</Link> */}
       {/* 페이지 이동버튼은 <Link></Link>
 to = 경로 */}
       <Routes>
@@ -94,6 +94,24 @@ to = 경로 */}
           <Route path="member" element={<div>멤버임</div>} />
           <Route path="location" element={<div>위치정보임</div>} />
         </Route>
+        <Route path="/event" element={<Event />}>
+          <Route
+            path="one"
+            element={
+              <div>
+                <h2>첫 주문시 양배추즙 서비스</h2>
+              </div>
+            }
+          ></Route>
+          <Route
+            path="two"
+            element={
+              <div>
+                <h2>생일기념 쿠폰받기</h2>
+              </div>
+            }
+          ></Route>
+        </Route>
 
         {/* 경로 뒤에 슬래시 몇개인건 전혀 상관이 없음 */}
       </Routes>
@@ -119,6 +137,15 @@ to = 경로 */}
 
           
 */}
+    </div>
+  );
+}
+
+function Event() {
+  return (
+    <div>
+      <h1>오늘의 이벤트</h1>
+      <Outlet></Outlet>
     </div>
   );
 }
