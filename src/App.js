@@ -78,7 +78,25 @@ to = 경로 */}
             </>
           }
         />
-        <Route path="/detail" element={<Detail shoes={shoes} />} />
+        <Route path="/detail/:id" element={<Detail shoes={shoes} />} />
+
+        {/* 
+        <Route path="/detail/0" element={<Detail shoes={shoes} />} />
+        <Route path="/detail/1" element={<Detail shoes={shoes} />} />
+        <Route path="/detail/2" element={<Detail shoes={shoes} />} />
+        이거 대신 라우터적으로... URL 파라미터를 사용할 수 있음
+
+         <Route path="/detail/:id" element={<Detail shoes={shoes} />} />
+          >> detail/아무거나 쳤을때 > 이 페이지 보여주세요 
+        이렇게하면 뭘치든간에 다 detail 페이지를 보여줌 > 상세페이지를 수백만개를 만드는거
+        
+          각각 다 다른내용을 보여주고 싶어요 > props를 사용해도 되는데 Router 적으로 해결할 수도 있음
+          detail.js에서 {props.shoes[현재URL에입력한숫자].title} < 이렇게 들어가게 하면 되는거잖아
+
+
+          path="/detail/:id/sdfs/:sdfse" < 파라미터 이 뒤에 여러개 쓸수 있다. 그리고 파라미터랑 일반 문자랑 이렇게 섞어쓸수도 있다
+
+        */}
         {/* Detail로 그냥 import했을때 <Detail /> 이렇게 넣기 가능!!!!
         
         어? 왜지? 내가 Detail 로 쓰면 되는데 <Detail />은 오류가 뜬다. */}
