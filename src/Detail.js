@@ -19,6 +19,28 @@ let YellowBtn = styled.button`
   이걸 변수에 저장해서 내가 원하는데에 갖다 쓸 수 있다.
   스타일이 입혀진 하나의 컴포넌트를 생성하는 문법이기 때문에 대문자로 작명해야 한다
 
+  * props 문법 쓰는법
+    let YellowBtn = styled.button`
+    background: ${ props => props.bg }; //bg 를 입력할수 있음
+  `
+  <YellowBtn bg='blue'></YellowBtn>
+  <YellowBtn bg='orange'></YellowBtn>
+
+  * 기존 스타일 복사
+  let NewBtn = styled.button(YellowBtn)`
+    수정할 것들 
+  `;
+
+  장점
+  1. CSS 안열어도된다
+  2. 여기서 짠 스타일은 다른 js 파일에 오염되지 않는다 (리액트가 하나로 합쳐서 다른페이지에 오염될수도 있는데)
+      ㄴ CSS 파일 만들때 App.module.css < 이렇게 작명하면 그 App 에만 종속되는 스타일 만들수 있음
+  3. 로딩시간이 단축
+
+  단점
+  1. JS 파일이 매우더러워짐
+  2. style 재사용하려면 export/import해야하는데 그럴거면 CSS 씀
+  3. 협업시 CSS 숙련도 이슈
 
 */
 
@@ -59,3 +81,12 @@ function Detail(props) {
 }
 
 export default Detail;
+
+/* ===================== 컴포넌트 생명주기 =====================
+  컴포넌트 lifecycle
+    >장착됨(mount)
+    >업데이트됨(update)
+    >제거됨(unmount)
+
+  저 
+*/
