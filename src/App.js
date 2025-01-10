@@ -2,6 +2,8 @@
 import { Button, Navbar, Container, Nav, Row, Col } from "react-bootstrap";
 import { useState } from "react";
 import { Routes, Route, Link, useNavigate, Outlet } from "react-router-dom";
+import axios from "axios";
+
 
 // import 작명 from '이미지 경로';
 
@@ -19,10 +21,11 @@ import "./App.css";
 // 현재경로를 다 가져와주는거 > {process.env.PUBLIC_URL + '/logo.png'} < 이게 public폴더 이미지 쓰는 권장 방식
 
 import data from "./data.js";
-import Detail from "./Detail.js";
+import Detail from "./routes/Detail.js";
+import Cart from "./routes/Cart.js";
 
 function App() {
-  let [shoes] = useState(data);
+  let [shoes, setShoes] = useState(data);
   // 너무 기니까 다른파일로 뺄수있음 > export, import 해야함
   // 이 변수는 함수 안에넣어야함!!!!!!!!!!!!!!☆☆☆☆☆
 
@@ -75,10 +78,54 @@ to = 경로 */}
                   })}
                 </div>
               </div>
+              <button onClick={()=>{
+                axios.get('https://codingapple1.github.io/shop/data2.json')
+                .then((result)=>{
+                 
+                  let cpy = [...shoes];
+                  // 여기서 cpy = [...shoes, result.data] 이렇게 쓰면 concat 으로 합치지 않아도 바로 같이 배열에 담김!!!
+                  cpy.push(result);
+                  setShoes(cpy);
+                  console.log(cpy);
+                }
+                  
+                )
+                .catch(()=>{
+                  console.log('실패');
+                })
+              }}>버튼</button>
             </>
           }
         />
+      {
+      /* ===================== AJAX ========================
+
+      서버에 데이터 요청할 때 규격에 맞춰야함
+        1. 방법? (GET/POST)
+        2. 어떤자료? (URL)
+
+        GET은 주로 가져올때 / POST는 주로 보낼때
+        GET요청은 브라우저 주소창이 원래 GET요청 날리는 곳임.
+        근데 주소창 통해서 GET/POST하면 새로고침 됨
+        
+        javascript 로 비동기로 데이터 주고받는 방법 - 3가지 있음
+        1. XMLHttpRequest (옛날js문법)
+        2. fetch (요즘js문법)
+        3. axios 같은 외부 라이브러리
+
+        ------ axios 사용법 -------------------------------------
+        axios.get('URL') => GET요청 보내줌
+
+        .then((result) => { 성공하면 할 일 })
+        .catch(()=>{ 실패하면 할 일 })
+
+        안에 파라미터 넣으면 실제 가져온 데이터가됨
+        거기서 실제로 서버의 데이터를 출력하고싶다 > .data 하면됨
+
+      */}
+
         <Route path="/detail/:id" element={<Detail shoes={shoes} />} />
+        <Route path="/cart" element={ <Cart /> } />
 
         {/* 
         <Route path="/detail/0" element={<Detail shoes={shoes} />} />
@@ -248,3 +295,4 @@ react는 SPA라서 html파일을 하나밖에 사용을 안함 (index.html)
     2. 페이지 이동이 쉬움 (UI 스위치 조작이 쉬움)
 
 */
+
