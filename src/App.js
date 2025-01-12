@@ -170,6 +170,30 @@ to = 경로 */}
         안에 파라미터 넣으면 실제 가져온 데이터가됨
         거기서 실제로 서버의 데이터를 출력하고싶다 > .data 하면됨
 
+        서버로 데이터를 전송할 수도 있음
+        axios.post('URL', { 데이터 } ) 
+        데이터를 뒤에 파라미터로 넣어서 줌
+        
+        만약에 AJAX 요청을 동시에 여러 곳으로 하고 싶다 
+        ㄴ Promise.all([ axios.get('URL') , axios.get('URL')  ]) 
+          .then(()=>{
+              할일
+            })
+          이 배열 안에 내가 보내고 싶은 ajax 요청들을 넣는것
+          전부 다 성공했을 경우 - then
+
+          원래 서버하고는 문자만 주고받을 수 있다. array/object 이런 건 못주고 받음. 
+          "" 쳐놓으면 array, object 도 주고받기가 가능
+          "{ "name" : "kim" }" < 이렇게 돼있는 자료를 JSON 이라고 함.
+          JSON 데이터는 문자 취급 받을 수 있기 때문에 맘대로 주고받을 수 있다
+
+          axios가 JSON을 알아서 변환해줘서 객체나 배열이 잘 도착하는거
+
+          fetch==================================
+          fetch('URL')라는 js 기본 문법으로도 GET 요청이 가능
+          이렇게 할 때는 json을 그대로 출력해주기 때문에 array나 object로 변환해주는 과정이 필요
+          .then(결과 => 결과.json())     <<- 그래서 얘를 해줘야함
+          .then(data => {  })
       */}
 
         <Route path="/detail/:id" element={<Detail shoes={shoes} />} />
