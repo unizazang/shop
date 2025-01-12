@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { Button, Navbar, Container, Nav, Row, Col } from "react-bootstrap";
+import { Button, Navbar, Container, Nav, Row, Col , Modal } from "react-bootstrap";
 import { useState } from "react";
 import { Routes, Route, Link, useNavigate, Outlet } from "react-router-dom";
 import axios from "axios";
@@ -31,6 +31,9 @@ function App() {
 
   // use어쩌구 ~ > Hook임.
   let navigate = useNavigate(); //이 안에는 페이지 이동을 도와주는 함수 하나가 들어있습니다. 이걸 변수에 저장해서 씀
+  let [clicked, setClicked] = useState('0');
+  let [loading, setloading] = useState('false');
+
 
   return (
     <div className="App">
@@ -74,25 +77,70 @@ to = 경로 */}
               <div class="container ">
                 <div className="row">
                   {shoes.map((a, i) => {
-                    return <Product index={i} shoes={shoes} />;
+                    return <Product index={i} imgi={i+1} shoes={shoes}  key={i} />;
                   })}
                 </div>
               </div>
+
+              {
+                loading == true ? 
+                <Loading></Loading> : null
+
+              }
               <button onClick={()=>{
-                axios.get('https://codingapple1.github.io/shop/data2.json')
-                .then((result)=>{
-                 
-                  let cpy = [...shoes];
-                  // 여기서 cpy = [...shoes, result.data] 이렇게 쓰면 concat 으로 합치지 않아도 바로 같이 배열에 담김!!!
-                  cpy.push(result);
-                  setShoes(cpy);
-                  console.log(cpy);
+                // clicked++; 이게 패인이었다!!!
+                setClicked(++clicked);
+                setloading(true);
+
+                if(clicked == 1){
+                  axios.get('https://codingapple1.github.io/shop/data2.json')
+                  .then((result)=>{
+                   
+                    let cpy = [...shoes, ...result.data];
+                    // 여기서 cpy = [...shoes, result.data] 이렇게 쓰면 concat 으로 합치지 않아도 바로 같이 배열에 담김!!!
+  
+  
+                    // 여기서 실수한 부분!!!!!!!!!!!!!!!!!!!!!1
+                    // [...shoes, result.data]; 이렇게 담았는데 이게아니라 result.data도 풀었어야 함. ...result.data 로!!!!
+  
+                    
+                    // cpy.push(result.data); //result가 아니고 result.data를 넣어야 제대로 들어간 거였음 ,
+                    // + 저렇게 위에서 합쳐버렸으니까 push 를 할 필요가 없음!!!!!
+                    setShoes(cpy);
+                    // console.log("Updated shoes:", cpy); // 상태 업데이트 확인
+
+                    // 로딩중 UI는 성공했을 때 지우면 됨!!!
+                    setTimeout(()=>{
+                      setloading(false);
+                    }, 2000)
+                  }
+                    
+                  )
+                  .catch(()=>{
+                    console.log('실패');
+                    setloading(false);
+                  })
                 }
+                else if(clicked == 2){
+                  axios.get('https://codingapple1.github.io/shop/data3.json')
+                  .then((result1)=>{
+                    let cpy = [...shoes, ...result1.data];
+                    setShoes(cpy);
+                    setloading(false);
+                  })
+                  .catch(()=>{
+                    console.log('실패');
+                    setloading(false);
+                  })
+                } else if(clicked >= 3){
+                  alert('상품이 없습니다.');
+                  setloading(false);
                   
-                )
-                .catch(()=>{
-                  console.log('실패');
-                })
+                }
+
+                
+                
+                
               }}>버튼</button>
             </>
           }
@@ -206,6 +254,30 @@ to = 경로 */}
   );
 }
 
+function Loading(){
+  return(
+    <div
+      className="modal show"
+      style={{ display: 'block', position: 'initial' }}
+    >
+      <Modal.Dialog>
+        <Modal.Header closeButton>
+          <Modal.Title>로딩</Modal.Title>
+        </Modal.Header>
+
+        <Modal.Body>
+          <p>로딩 중입니다. 잠시만 기다려 주세요...</p>
+        </Modal.Body>
+
+        <Modal.Footer>
+          <Button variant="secondary">Close</Button>
+          <Button variant="primary">Save changes</Button>
+        </Modal.Footer>
+      </Modal.Dialog>
+    </div>
+  )
+}
+
 function Event() {
   return (
     <div>
@@ -231,7 +303,10 @@ function Product(props) {
   // console.log(cpy);
   return (
     <div class="col-md-4">
-      <img src={props.shoes[props.index].img} width="80%" />
+      {/* <img src={props.shoes[props.index].img} width="80%" /> */}
+      <img src={"https://codingapple1.github.io/shop/shoes" +  props.imgi  + ".jpg"} width="80%" />
+    {/* 
+       이렇게 쓸수도 있는데 이 때는 전체에다가 대괄호 쳐 줘야 한다. imgi */}
       <h4>{props.shoes[props.index].title}</h4>
       <p>{props.shoes[props.index].price}</p>
     </div>
