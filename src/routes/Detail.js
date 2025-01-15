@@ -122,8 +122,8 @@ function Detail(props) {
   let [a,setA] = useState(0);
   
   let [num, setNum] = useState(0);
-  let [tabVisible, setTabVisible] = useState(false);
-  let [tabs, setTabs] = useState([{},{},{}]);
+  let [visible, setVisible] = useState(true);
+  // let [tabs, setTabs] = useState([{},{},{}]);
 
   useEffect(()=>{
     let timer = setTimeout(()=>{
@@ -183,9 +183,14 @@ function Detail(props) {
 
 
   let [count, setCount] = useState(0);
-  let [visible, setVisible] = useState(true);
-  // let [className, setClassName] = useState('tab-invisible');
-  let tabClassName = 'tab-invisible';
+  // let [visible, setVisible] = useState(true);
+  // // let [className, setClassName] = useState('tab-invisible');
+  // let tabClassName = 'tab-invisible';
+
+  let [tabNum, setTabNum] = useState([0,1,2]); //보여줄 탭의 인덱스
+
+
+  
 
   let { id } = useParams();
   let foundProduct = props.shoes.find((product) => {
@@ -234,26 +239,33 @@ function Detail(props) {
         </div>
       </div>
       <Nav variant="tabs"  defaultActiveKey="link0">
-        {
-          tabs.map((a, i)=>{
-            return <Tab className={tabClassName} tabVisible={tabVisible} setTabVisible={setTabVisible} index={i} />
-          })
-
-        }
-        {/* {
-         !tabVisible ? tabClassName = 'tab-visible' : null
-        } */}
-
-        {
-          tabVisible ? tabClassName = 'tab-visible' : null
-        }
+{
+  tabNum.map((_, i)=>{
+    return <Tab index={i}><TabContent tabNum={tabNum} index={i}></TabContent></Tab> 
+  })
+}
       </Nav>
 
-    <div>내용2</div> 
     </div>
   ) : (
     <div>상품을 찾을 수 없ㅅ브니다.</div>
   );
+}
+
+/* if문은 JSX 안에서는 못쓰기 때문에 (대신 바깥에선 됨) if 문 사용할 땐 이런 방식으로 함
+  얘를 컴포넌트로 묶어서 담아버리는거~!! */
+
+
+function TabContent(props){
+  if(props.tabNum == 0){
+    return <div>내용0</div>
+  } 
+  if(props.tabNum == 1){
+    return <div>내용1</div>
+  } 
+  if(props.tabNum == 2){
+    return <div>내용2</div>
+  }
 }
 
 
@@ -262,9 +274,8 @@ function Tab(props){
   return (
     <Nav.Item>
       <Nav.Link onClick={()=>{
-        return  !props.tabVisible ? props.setTabVisible(true) : null
-      }} eventKey="link0">버튼{props.index}</Nav.Link>
-      {/* 중괄호 생략 안할거면 return 꼭 써줘야함!!!! */}
+        return  
+      }} eventKey={"link"+ props.index +""}>버튼{props.index + 1}</Nav.Link>
       <div>내용{props.index}</div>
     </Nav.Item>
   )
