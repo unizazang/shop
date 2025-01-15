@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { Nav } from "react-bootstrap";
 import styled from "styled-components";
 
 let YellowBtn = styled.button`
@@ -121,7 +122,8 @@ function Detail(props) {
   let [a,setA] = useState(0);
   
   let [num, setNum] = useState(0);
-
+  let [tabVisible, setTabVisible] = useState(false);
+  let [tabs, setTabs] = useState([{},{},{}]);
 
   useEffect(()=>{
     let timer = setTimeout(()=>{
@@ -182,7 +184,9 @@ function Detail(props) {
 
   let [count, setCount] = useState(0);
   let [visible, setVisible] = useState(true);
-  
+  // let [className, setClassName] = useState('tab-invisible');
+  let tabClassName = 'tab-invisible';
+
   let { id } = useParams();
   let foundProduct = props.shoes.find((product) => {
     return product.id === parseInt(id);
@@ -229,11 +233,48 @@ function Detail(props) {
           <button className="btn btn-danger">주문하기</button>
         </div>
       </div>
+      <Nav variant="tabs"  defaultActiveKey="link0">
+        {
+          tabs.map((a, i)=>{
+            return <Tab className={tabClassName} tabVisible={tabVisible} setTabVisible={setTabVisible} index={i} />
+          })
+
+        }
+        {/* {
+         !tabVisible ? tabClassName = 'tab-visible' : null
+        } */}
+
+        {
+          tabVisible ? tabClassName = 'tab-visible' : null
+        }
+      </Nav>
+
+    <div>내용2</div> 
     </div>
   ) : (
     <div>상품을 찾을 수 없ㅅ브니다.</div>
   );
 }
+
+
+
+function Tab(props){
+  return (
+    <Nav.Item>
+      <Nav.Link onClick={()=>{
+        return  !props.tabVisible ? props.setTabVisible(true) : null
+      }} eventKey="link0">버튼{props.index}</Nav.Link>
+      {/* 중괄호 생략 안할거면 return 꼭 써줘야함!!!! */}
+      <div>내용{props.index}</div>
+    </Nav.Item>
+  )
+}
+
+/* Nav.Link 이거 하나가 버튼 하나
+  eventKey라는 속성이 각각 있고, Nav 큰거 하나에 defaultactiveKey<- 이거는 기본으로 눌려있을 버튼
+
+  ㅋ
+*/
 
 export default Detail;
 

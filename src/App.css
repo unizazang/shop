@@ -42,6 +42,19 @@
   background-position: center;
 }
 
+.tab-visible{
+  height: 100px;
+  background-color: red;
+  border: 1px solid #000;
+  color:white;
+}
+
+.tab-invisible{
+  display: none;
+
+}
+
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
