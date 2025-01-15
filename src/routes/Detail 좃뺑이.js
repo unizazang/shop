@@ -183,16 +183,14 @@ function Detail(props) {
 
 
   let [count, setCount] = useState(0);
-  /* 3step
-  1. UI 먼저 만들어놓기
-  2. 스위치 만들기
-  3. 조건문 쓰기
+  // let [visible, setVisible] = useState(true);
+  // // let [className, setClassName] = useState('tab-invisible');
+  // let tabClassName = 'tab-invisible';
+
+  let [activeTab, setActiveTab] = useState(0); //보여줄 탭의 인덱스
+  let tabs = ['탭1내용', '탭2내용', '탭3내용'];
+
   
-  */
-  let [activeTab, setActiveTab] = useState(0);
-  let tabContent = ['탭1내용','탭2내용','탭3내용','탭4내용'];
-
-
 
   let { id } = useParams();
   let foundProduct = props.shoes.find((product) => {
@@ -200,8 +198,6 @@ function Detail(props) {
   });
   console.log(foundProduct);
 
-
-  
 
   /* 오늘의 응용 =====================
     /detail/0 접속시 0번째 상품이 아니라(정렬시 이상해짐)
@@ -228,10 +224,6 @@ function Detail(props) {
           }
         }}
       ></input>
-
-
-
-      
       <div className="row">
         <div className="col-md-6">
           <img
@@ -247,15 +239,20 @@ function Detail(props) {
         </div>
       </div>
       <Nav variant="tabs"  defaultActiveKey="link0">
-          {
-            tabContent.map((_, i)=>{
-              return <Tab i={i} btnIdx={i+1} activeTab={activeTab} setActiveTab={setActiveTab} />
-              // 자꾸 빼먹는데 여기서 return 빼먹지마 ㅡㅡ
-            })
-          }
+{
+  tabNum.map((_, i)=>{
+    return <TabContent tabNum={tabNum} /> 
+  })
+}
+
+  {
+    tabs.map(()=>{
+      <div>
+        {tabs[activeTab]}
+      </div>
+    })
+  }
       </Nav>
-        
-      <div>{tabContent[activeTab]}</div>
 
     </div>
   ) : (
@@ -263,19 +260,41 @@ function Detail(props) {
   );
 }
 
+/* if문은 JSX 안에서는 못쓰기 때문에 (대신 바깥에선 됨) if 문 사용할 땐 이런 방식으로 함
+  얘를 컴포넌트로 묶어서 넣어버리는거~!! 
+  
+  + 컴포넌트기 때문에 리턴문을 꼭 써야함 */
+// function TabContent(props){
+//   if(props.tabNum == 0){
+//     return <div>내용0</div>
+//   } 
+//   if(props.tabNum == 1){
+//     return <div>내용1</div>
+//   } 
+//   if(props.tabNum == 2){
+//     return <div>내용2</div>
+//   }
+// }
+
+
+
 function Tab(props){
-  return(
+  return (
     <Nav.Item>
-      <Nav.Link eventKey={`link${props.i}`}
-      onClick={()=>{
-        props.setActiveTab(props.i);
-      }}
-      >{'버튼'+ props.btnIdx}</Nav.Link>
+      <Nav.Link onClick={()=>{ //클릭하면 해야 할 일
+          setActiveTab(props.index);
+
+        }} eventKey={`link${props.index + 1}`}>버튼{props.index + 1}</Nav.Link>
+      <div>내용{props.index}</div>
     </Nav.Item>
   )
 }
 
+/* Nav.Link 이거 하나가 버튼 하나
+  eventKey라는 속성이 각각 있고, Nav 큰거 하나에 defaultactiveKey<- 이거는 기본으로 눌려있을 버튼
 
+  ㅋ
+*/
 
 export default Detail;
 
