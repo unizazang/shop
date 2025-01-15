@@ -187,7 +187,7 @@ function Detail(props) {
   // // let [className, setClassName] = useState('tab-invisible');
   // let tabClassName = 'tab-invisible';
 
-  let [tabNum, setTabNum] = useState([0,1,2]); //보여줄 탭의 인덱스
+  let [tabNum, setTabNum] = useState(0); //보여줄 탭의 인덱스
 
 
   
@@ -241,7 +241,7 @@ function Detail(props) {
       <Nav variant="tabs"  defaultActiveKey="link0">
 {
   tabNum.map((_, i)=>{
-    return <Tab index={i}><TabContent tabNum={tabNum} index={i}></TabContent></Tab> 
+    return <TabContent tabNum={tabNum} /> 
   })
 }
       </Nav>
@@ -253,9 +253,9 @@ function Detail(props) {
 }
 
 /* if문은 JSX 안에서는 못쓰기 때문에 (대신 바깥에선 됨) if 문 사용할 땐 이런 방식으로 함
-  얘를 컴포넌트로 묶어서 담아버리는거~!! */
-
-
+  얘를 컴포넌트로 묶어서 넣어버리는거~!! 
+  
+  + 컴포넌트기 때문에 리턴문을 꼭 써야함 */
 function TabContent(props){
   if(props.tabNum == 0){
     return <div>내용0</div>
@@ -270,16 +270,16 @@ function TabContent(props){
 
 
 
-function Tab(props){
-  return (
-    <Nav.Item>
-      <Nav.Link onClick={()=>{
-        return  
-      }} eventKey={"link"+ props.index +""}>버튼{props.index + 1}</Nav.Link>
-      <div>내용{props.index}</div>
-    </Nav.Item>
-  )
-}
+// function Tab(props){
+//   return (
+//     <Nav.Item>
+//       <Nav.Link onClick={()=>{
+//         return  
+//       }} eventKey={"link"+ props.index +""}>버튼{props.index + 1}</Nav.Link>
+//       <div>내용{props.index}</div>
+//     </Nav.Item>
+//   )
+// }
 
 /* Nav.Link 이거 하나가 버튼 하나
   eventKey라는 속성이 각각 있고, Nav 큰거 하나에 defaultactiveKey<- 이거는 기본으로 눌려있을 버튼
