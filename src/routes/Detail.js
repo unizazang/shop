@@ -183,12 +183,6 @@ function Detail(props) {
 
 
   let [count, setCount] = useState(0);
-  /* 3step
-  1. UI 먼저 만들어놓기
-  2. 스위치 만들기
-  3. 조건문 쓰기
-  
-  */
   let [activeTab, setActiveTab] = useState(0);
   let tabContent = ['탭1내용','탭2내용','탭3내용','탭4내용'];
 
@@ -274,6 +268,7 @@ function Tab(props){
     </Nav.Item>
   )
 }
+// 이전에 좃뺑이 친거는 detail 좃뺑이 js 에 있음
 
 
 
