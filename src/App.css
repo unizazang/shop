@@ -54,6 +54,27 @@
 
 }
 
+.box{
+  background-color: red;
+  width: 500px;
+  height: 500px;
+  color: white;
+}
+.start {
+  opacity : 0
+}
+.end {
+  opacity : 1;
+  transition: opacity 0.5s ;
+}
+
+.black {
+  background: #000;
+}
+.white{
+  background: #fff;
+  transition: 0.5s all;
+}
 
 @keyframes App-logo-spin {
   from {

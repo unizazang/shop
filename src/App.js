@@ -1,6 +1,6 @@
 /* eslint-disable */
 import { Button, Navbar, Container, Nav, Row, Col , Modal } from "react-bootstrap";
-import { useState } from "react";
+import { useState , useEffect } from "react";
 import { Routes, Route, Link, useNavigate, Outlet } from "react-router-dom";
 import axios from "axios";
 
@@ -33,6 +33,7 @@ function App() {
   let navigate = useNavigate(); //이 안에는 페이지 이동을 도와주는 함수 하나가 들어있습니다. 이걸 변수에 저장해서 씀
   let [clicked, setClicked] = useState('0');
   let [loading, setloading] = useState('false');
+
 
 
   return (
@@ -196,7 +197,7 @@ to = 경로 */}
           .then(data => {  })
       */}
 
-        <Route path="/detail/:id" element={<Detail shoes={shoes} />} />
+        <Route path="/detail/:id"  element={<Detail shoes={shoes} className="start black " />} />
         <Route path="/cart" element={ <Cart /> } />
 
         {/* 

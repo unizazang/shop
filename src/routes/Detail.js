@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Nav } from "react-bootstrap";
 import styled from "styled-components";
+import  "../App.css";
+// css 임포트할때는 뭐뭐 가 아니고 그냥 import App.css
 
 let YellowBtn = styled.button`
   background: yellow;
@@ -194,7 +196,14 @@ function Detail(props) {
   });
   console.log(foundProduct);
 
-
+  let [fade2, setFade2] = useState('');
+  useEffect(()=>{
+    let newTimer = setTimeout(()=>{ setFade2('end'); }, 1000);
+    return () => { 
+      setFade2(' white');
+      clearTimeout(newTimer);
+    }
+  } )
   
 
   /* 오늘의 응용 =====================
@@ -202,7 +211,7 @@ function Detail(props) {
     상품id가 0인 걸 보여주면 좋을 듯.
   */
   return foundProduct ? (
-    <div className="container">
+    <div className={"container black "+ fade2}>
       {
         visible == true ? <div className="alert alert-warning">
         2초 이내 구매시 할인
@@ -249,8 +258,9 @@ function Detail(props) {
           }
       </Nav>
         
-      <div>{tabContent[activeTab]}</div>
-
+      {/* <div>{tabContent[activeTab]}</div> */}
+          {/* <TabContent className=" end" /> 여기가 아니라 그 자식한테 부착해줘야 되는거였음 */}
+          <TabContent activeTab={activeTab} />
     </div>
   ) : (
     <div>상품을 찾을 수 없ㅅ브니다.</div>
@@ -271,6 +281,27 @@ function Tab(props){
 // 이전에 좃뺑이 친거는 detail 좃뺑이 js 에 있음
 
 
+//트랜지션 연습용
+function TabContent({activeTab}){
+  let [fade, setFade] = useState('');
+  useEffect(()=>{
+    let timer = setTimeout(()=>{
+      setFade('end')
+    },1000)
+    // automatic batching 때문에 state 다 변경하고 나서 마지막에 반영(재랜더링)함
+    // 그래서 실행 시점을 미뤄줘야 정상적으로 동작
+
+    return () => {
+      setFade(''); // 얘가 먼저 실행됨
+      clearTimeout(timer)
+    }
+  },activeTab)
+  return (
+    <div className={"start box " + fade}>
+      { [<div>내용1</div>, <div>내용2</div>, <div>내용3</div>][activeTab] }
+    </div>
+  )
+}
 
 export default Detail;
 
