@@ -1,11 +1,14 @@
 // import { useParams } from "react-router-dom";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { Nav } from "react-bootstrap";
 import styled from "styled-components";
 import  "../App.css";
 // css 임포트할때는 뭐뭐 가 아니고 그냥 import App.css
+
+// context API 쓰려면 보관함 import
+import { Context1 } from './../App.js';
 
 let YellowBtn = styled.button`
   background: yellow;
@@ -203,8 +206,11 @@ function Detail(props) {
       setFade2(' white');
       clearTimeout(newTimer);
     }
-  } )
+  } , [])
   
+
+  let {stock} = useContext(Context1); // 보관함 해체해주는 함수
+  // 이 자리에 object 형식으로 나옴 { 1, 2, 3, 4 }
 
   /* 오늘의 응용 =====================
     /detail/0 접속시 0번째 상품이 아니라(정렬시 이상해짐)
@@ -245,7 +251,7 @@ function Detail(props) {
         <div className="col-md-6">
           <h4 className="pt-5">{foundProduct.title}</h4>
           <p>{foundProduct.content}</p>
-          <p>{foundProduct.price}원</p>
+          <p>{foundProduct.price}원 {stock}</p>
           <button className="btn btn-danger">주문하기</button>
         </div>
       </div>
@@ -283,6 +289,8 @@ function Tab(props){
 
 //트랜지션 연습용
 function TabContent({activeTab}){
+
+  let {stock} = useContext(Context1); // 이 한줄은 추가해줘야 가능
   let [fade, setFade] = useState('');
   useEffect(()=>{
     let timer = setTimeout(()=>{
@@ -298,7 +306,7 @@ function TabContent({activeTab}){
   },activeTab)
   return (
     <div className={"start box " + fade}>
-      { [<div>내용1</div>, <div>내용2</div>, <div>내용3</div>][activeTab] }
+      { [<div>{stock}</div>, <div>내용2</div>, <div>내용3</div>][activeTab] }
     </div>
   )
 }

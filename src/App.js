@@ -1,6 +1,6 @@
 /* eslint-disable */
 import { Button, Navbar, Container, Nav, Row, Col , Modal } from "react-bootstrap";
-import { useState , useEffect } from "react";
+import { useState , useEffect, createContext } from "react";
 import { Routes, Route, Link, useNavigate, Outlet } from "react-router-dom";
 import axios from "axios";
 
@@ -24,6 +24,10 @@ import data from "./data.js";
 import Detail from "./routes/Detail.js";
 import Cart from "./routes/Cart.js";
 
+
+export let Context1 = createContext();
+// context > state 보관함
+
 function App() {
   let [shoes, setShoes] = useState(data);
   // 너무 기니까 다른파일로 뺄수있음 > export, import 해야함
@@ -33,7 +37,7 @@ function App() {
   let navigate = useNavigate(); //이 안에는 페이지 이동을 도와주는 함수 하나가 들어있습니다. 이걸 변수에 저장해서 씀
   let [clicked, setClicked] = useState('0');
   let [loading, setloading] = useState('false');
-
+  let [stock, setStock] = useState([10,11,12]);
 
 
   return (
@@ -197,7 +201,14 @@ to = 경로 */}
           .then(data => {  })
       */}
 
-        <Route path="/detail/:id"  element={<Detail shoes={shoes} className="start black " />} />
+        <Route path="/detail/:id"  element={
+          <Context1.Provider value={{shoes, stock}}>
+            <Detail shoes={shoes} className="start black " />
+          </Context1.Provider>
+          } />
+          {/* context API 쓰려면 위에서 컨텍스트 생성하고 state 공유원하는 자식 컴포넌트를 감싸준다
+          value 를 하나 열어서 state들을 넣어주면 됨 (중괄호 한번 더 감싸야 함)
+          */}
         <Route path="/cart" element={ <Cart /> } />
 
         {/* 
