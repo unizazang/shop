@@ -239,6 +239,7 @@ to = 경로 */}
         <Route path="*" element={<div>없는페이지요</div>} />
         {/* path="*" < 위에 만들어놓은 라우트 외에 모든것. */}
 
+        <Route path="/cart" element={<Cart />} />
         <Route path="/about" element={<About />}>
           <Route path="member" element={<div>멤버임</div>} />
           <Route path="location" element={<div>위치정보임</div>} />
