@@ -14,8 +14,44 @@ import { configureStore , createSlice } from '@reduxjs/toolkit'
 // createSlice()는 useState()랑 비슷한 용도
 let user = createSlice({
   name : 'user' , // state 이름
-  initialState : 'kim' //state 값
+  initialState : 'kim', //state 값
+  reducers : {
+    changeName(state){
+      return 'john ' + state 
+      // return 하고 새로운 값을 넣어주면 이 값으로 기존 state를 갈아치워 준다.
+      // 여기서 기존 state 의 값이 필요한 경우 파라미터 하나 추가
+    },
+    function(){
+
+    }
+
+  }
+
+  
+
+/* store에 들어있는 state 수정하기 --------------
+  1. state 만든 데 가서 수정하는 함수 만들기
+  2. 만든 함수를 export 해줘야함
+    export 할때 
+    changeName(state){
+      return 'john ' + state  << 요 상태로는 export가 안 되니까
+    },
+
+    user.actions < 하면 reducers : { 여기 있는 애들이 남는다 }
+
+    변수 선언하고 내보내야 되는데 관습적으로 이렇게 씀
+    export 하고싶은 함수명들을 이렇게 다 적어줌
+    export let { changeName , func1 , func2 } = user.actions 이런 식으로 쓴다
+
+    이것도 destructuring 문법임
+    오른쪽에 있는 자료를 변수로 빼는 거
+
+    3. 만든 함수를 import한다
+*/
+
 });  
+
+export let { changeName } = user.actions;
 // 이 안에 객체 로 넣어야함!!!
 
 let stock = createSlice({

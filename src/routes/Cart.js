@@ -26,18 +26,31 @@ function Cart(){
     return (
         <div>
            <Table>
+            <thead>
+              <tr> 
+                <th>#</th>
+                <th>상품명</th>
+                <th>수량</th>
+                <th>변경하기</th>
+              </tr>
+            </thead>
+            <tbody>
               {
                 cart.map((_, i)=>{
                   return (
-                    <tr> 
-                      <th>{cart[i].id}</th>
-                      <th>{cart[i].name}</th>
-                      <th>{cart[i].count}</th>
-                      <th>변경하기</th>
+                    <tr key={i}> 
+                    {/* key 속성은 여기 tr에 */}
+                      <td>{cart[i].id}</td>
+                      <td>{cart[i].name}</td>
+                      <td>{cart[i].count}</td>
+                      <td><button onClick={()=>{
+                        
+                      }}> + </button></td>
                     </tr>
                   )
                 })
               }
+            </tbody>
                 {/* <tr> 
                   <th>{cart[0].id}</th>
                   <th>{cart[0].name}</th>
