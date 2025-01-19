@@ -46,8 +46,27 @@ let user = createSlice({
     이것도 destructuring 문법임
     오른쪽에 있는 자료를 변수로 빼는 거
 
-    3. 만든 함수를 import한다
-*/
+    3. 만든 함수를 import해서 사용한다
+    import 하고나서 useDispatch() 라는 함수도 필요함
+    변수에 저장해서 쓴다
+
+    let dispatch = useDispatch();
+    dispatch( state 변경함수 () ) < 이렇게 사용해야함
+
+
+
+    store.js 에 수정함수 만들고
+    컴포넌트가 필요하면 store.js에 
+    ㄴ 수정함수 좀 실행해주세요 ~~ 함
+    그래서 dispatch로 실행해달라고 메세지를 보낸다.
+    실제 함수 실행은 store.js 가 해준다
+
+    왜이렇게하는거야?
+    ㄴ 모든 컴포넌트들이 store.js에 있는 state 를 맘대로 갖다 쓰면 어디서 버그가 났는지 찾기가 너무 힘들다 (모든 컴포넌트를 다 뒤져봐야 함)
+    그래서 store.js에 있는 수정함수에 부탁하는 식으로 하면 훨씬 버그 추적이 쉽다.
+    store.js만 뒤지면 되니까
+
+    */
 
 });  
 

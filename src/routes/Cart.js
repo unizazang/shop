@@ -1,12 +1,18 @@
 import {Table} from "react-bootstrap";
-import { useSelector } from "react-redux";
+import { useSelector , useDispatch } from "react-redux";
+import { changeName } from "./../store.js";
 
 function Cart(){
 
   // redux store에 보관한 변수 꺼내쓰기 -----------------------
 
- let state = useSelector((state)=>{return state.stock}) // 가져와주는 함수
-    // 이 안에는 store 에 있던 모든 state가 들어있다
+ let state = useSelector((state)=>{return state}) // 가져와주는 함수
+// 이 안에는 store 에 있던 모든 state가 들어있다
+
+
+ let dispatch = useDispatch();
+//  store.js 한테 요청 보내주는 함수
+    
     console.log(state[1]);
 
     /* --------------------- useSelector 사용 팁 ----------------------- 
@@ -25,6 +31,8 @@ function Cart(){
     
     return (
         <div>
+
+          <h1>{state.user} 의 장바구니</h1>
            <Table>
             <thead>
               <tr> 
@@ -44,7 +52,7 @@ function Cart(){
                       <td>{cart[i].name}</td>
                       <td>{cart[i].count}</td>
                       <td><button onClick={()=>{
-                        
+                          dispatch(changeName())
                       }}> + </button></td>
                     </tr>
                   )
