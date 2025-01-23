@@ -1,6 +1,6 @@
 import {Table} from "react-bootstrap";
 import { useSelector , useDispatch } from "react-redux";
-import { changeName } from "./../store.js";
+import { changeName , changeAge } from "./../store.js";
 
 function Cart(){
 
@@ -13,7 +13,9 @@ function Cart(){
  let dispatch = useDispatch();
 //  store.js 한테 요청 보내주는 함수
     
-    console.log(state[1]);
+    // console.log(state[1]);
+    console.log(state.user);
+    console.log(state.user.age);
 
     /* --------------------- useSelector 사용 팁 ----------------------- 
     useSelector((state)=>{return state}) <- 여기에는 store 안에있는 모든 state를 뜻하기 때문에
@@ -32,7 +34,11 @@ function Cart(){
     return (
         <div>
 
-          <h1>{state.user} 의 장바구니</h1>
+          <h1>{state.user.name} {state.user.age} 의 장바구니</h1>
+          <button onClick={()=>{
+            // state.user.age = 30;
+            dispatch(changeAge());
+          }}> 버튼 </button>
            <Table>
             <thead>
               <tr> 

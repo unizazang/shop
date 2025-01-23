@@ -14,15 +14,17 @@ import { configureStore , createSlice } from '@reduxjs/toolkit'
 // createSlice()는 useState()랑 비슷한 용도
 let user = createSlice({
   name : 'user' , // state 이름
-  initialState : 'kim', //state 값
+  initialState : { name : 'kim' , age: 20}, //state 값
   reducers : {
     changeName(state){
-      return 'john ' + state 
+      // return { name : 'park' , age: 20}
       // return 하고 새로운 값을 넣어주면 이 값으로 기존 state를 갈아치워 준다.
       // 여기서 기존 state 의 값이 필요한 경우 파라미터 하나 추가
+      
+      state.name = 'park';
     },
-    function(){
-
+    changeAge(state){
+      state.age++;
     }
 
   }
@@ -70,7 +72,7 @@ let user = createSlice({
 
 });  
 
-export let { changeName } = user.actions;
+export let { changeName , changeAge } = user.actions;
 // 이 안에 객체 로 넣어야함!!!
 
 let stock = createSlice({
