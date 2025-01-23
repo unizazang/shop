@@ -38,6 +38,7 @@ function Cart(){
           <button onClick={()=>{
             // state.user.age = 30;
             dispatch(changeAge());
+            // dispatch(()=>{ state.user.age ++ })
           }}> 버튼 </button>
            <Table>
             <thead>
