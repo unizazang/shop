@@ -30,7 +30,6 @@ function Cart(){
 
     let cart = useSelector((state) => state.cart)
 
-    
     return (
         <div>
 
@@ -39,6 +38,8 @@ function Cart(){
             // state.user.age = 30;
             dispatch(changeAge());
             // dispatch(()=>{ state.user.age ++ })
+            // dispatch() 안에 익명함수를 쓸 수 없음,
+            // reducers : 안에다가 쓰더라도 익명함수를 쓸 수 없음 : reducer함수여야 하기 때문
           }}> 버튼 </button>
            <Table>
             <thead>
