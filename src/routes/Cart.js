@@ -36,7 +36,7 @@ function Cart(){
           <h1>{state.user.name} {state.user.age} 의 장바구니</h1>
           <button onClick={()=>{
             // state.user.age = 30;
-            dispatch(changeAge());
+            dispatch(changeAge(100));
             // dispatch(()=>{ state.user.age ++ })
             // dispatch() 안에 익명함수를 쓸 수 없음,
             // reducers : 안에다가 쓰더라도 익명함수를 쓸 수 없음 : reducer함수여야 하기 때문

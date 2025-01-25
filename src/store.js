@@ -22,11 +22,18 @@ let user = createSlice({
       // 여기서 기존 state 의 값이 필요한 경우 파라미터 하나 추가
       
       state.name = 'park';
+      // 배열이나 오브젝트는 return 안쓰고 직접 변경해도 봐준다(immer.js 도움)
+      // 그래서 하나짜리 문자열도 그냥 객체 안에 담기도 함 (그래야 수정하기 편하니까)
     },
-    changeAge(state){
-      state.age++;
+    changeAge(state , a){
+      state.age += a.payload;
     }
 
+    // state 변경함수에 파라미터 뚫는 법
+    // 정확히 하려면 payload 라고 써 줘야 파라미터자리에 들어있던 숫자가 들어온다.
+    // 파라미터를 작명할때 주로 action이라고 많이들 작명하는데 
+    // 이 화물(payload) 뿐만 아니라 이 action에 대한 여러가지 정보들도 들어있기 때문
+    // action이 뭐임? : 이 state 변경함수들을 전부 action 이라고 함
   }
 
   
