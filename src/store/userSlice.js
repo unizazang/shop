@@ -27,7 +27,10 @@ let user = createSlice({
     increaseCount(state, action) {
       // 파라미터는 보통 action이라고 작명한다
 
-      let itemId = state.findIndex((item) => item.id === action.payload);
+      let idx = state.findIndex((item) => item.id === action.payload);
+      if (idx != -1) {
+        state[idx].count++;
+      }
     },
     changeAge(state, a) {
       state.age += a.payload;
