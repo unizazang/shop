@@ -24,7 +24,11 @@ let user = createSlice({
       // 그래서 하나짜리 문자열도 그냥 객체 안에 담기도 함 (그래야 수정하기 편하니까)
       // cart[i].id = cart[i].id + 1;
     },
-    increaseCount(state, a) {},
+    increaseCount(state, action) {
+      // 파라미터는 보통 action이라고 작명한다
+
+      let itemId = state.findIndex((item) => item.id === action.payload);
+    },
     changeAge(state, a) {
       state.age += a.payload;
     },
