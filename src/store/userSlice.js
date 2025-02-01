@@ -22,8 +22,9 @@ let user = createSlice({
       //   state.name = "park";
       // 배열이나 오브젝트는 return 안쓰고 직접 변경해도 봐준다(immer.js 도움)
       // 그래서 하나짜리 문자열도 그냥 객체 안에 담기도 함 (그래야 수정하기 편하니까)
-      cart[i].id = cart[i].id + 1;
+      // cart[i].id = cart[i].id + 1;
     },
+    increaseCount(state, a) {},
     changeAge(state, a) {
       state.age += a.payload;
     },
@@ -77,5 +78,5 @@ let user = createSlice({
 
 export default user;
 
-export let { changeName, changeAge } = user.actions;
+export let { changeName, changeAge, increaseCount } = user.actions;
 // 이 안에 객체 로 넣어야함!!!
