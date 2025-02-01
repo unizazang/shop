@@ -28,7 +28,8 @@ let user = createSlice({
       // 파라미터는 보통 action이라고 작명한다
 
       let idx = state.findIndex((item) => item.id === action.payload);
-      if (idx != -1) {
+      if (idx !== -1) {
+        // jsx에서는 !==, === 을 권장함 (데이터 타입까지 일치)
         state[idx].count++;
       }
     },
