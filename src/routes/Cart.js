@@ -57,17 +57,17 @@ function Cart() {
           </tr>
         </thead>
         <tbody>
-          {cart.map((_, i) => {
+          {cart.map((item, i) => {
             return (
               <tr key={i}>
                 {/* key 속성은 여기 tr에 */}
-                <td>{cart[i].id}</td>
-                <td>{cart[i].name}</td>
-                <td>{cart[i].count}</td>
+                <td>{item.id}</td>
+                <td>{item.name}</td>
+                <td>{item.count}</td>
                 <td>
                   <button
                     onClick={() => {
-                      dispatch(increaseCount(cart[i].id));
+                      dispatch(increaseCount(item.id));
                       /* 클릭하면 이 id 번째의 수량을 1 증가시킨다 */
                     }}
                   >

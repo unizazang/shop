@@ -7,6 +7,18 @@ let cart = createSlice({
     { id: 2, name: "Grey Yordan", count: 1 },
   ],
   // 초기값을 여기 넣는 거임
+
+  reducers: {
+    increaseCount(state, action) {
+      // 파라미터는 보통 action이라고 작명한다
+
+      let idx = state.findIndex((item) => item.id === action.payload);
+      if (idx !== -1) {
+        // jsx에서는 !==, === 을 권장함 (데이터 타입까지 일치)
+        state[idx].count++;
+      }
+    },
+  }
 });
 
 // state 만드는 법 - 이거 state 하나를 slice 라고 부른다
@@ -23,15 +35,6 @@ let user = createSlice({
       // 배열이나 오브젝트는 return 안쓰고 직접 변경해도 봐준다(immer.js 도움)
       // 그래서 하나짜리 문자열도 그냥 객체 안에 담기도 함 (그래야 수정하기 편하니까)
       // cart[i].id = cart[i].id + 1;
-    },
-    increaseCount(state, action) {
-      // 파라미터는 보통 action이라고 작명한다
-
-      let idx = state.findIndex((item) => item.id === action.payload);
-      if (idx !== -1) {
-        // jsx에서는 !==, === 을 권장함 (데이터 타입까지 일치)
-        state[idx].count++;
-      }
     },
     changeAge(state, a) {
       state.age += a.payload;
@@ -84,7 +87,9 @@ let user = createSlice({
     */
 });
 
-export default user;
+export {user, cart };
 
-export let { changeName, changeAge, increaseCount } = user.actions;
+export let { changeName, changeAge } = user.actions;
 // 이 안에 객체 로 넣어야함!!!
+
+export let { increaseCount } = cart.actions;

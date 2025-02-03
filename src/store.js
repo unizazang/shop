@@ -7,8 +7,7 @@
 // 근데 store에다가 모든 state를 보관할 필요는 없다!!!!! 공유 안하는 거는 필요한 데만 useState()로 만들어서 쓰면 됨...
 
 import { configureStore, createSlice } from "@reduxjs/toolkit";
-import user from "./store/userSlice.js";
-import cart from "./store/userSlice.js";
+import { user, cart } from "./store/userSlice.js";
 
 let stock = createSlice({
   name: "stock",
