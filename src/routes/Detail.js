@@ -4,17 +4,21 @@ import { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { Nav } from "react-bootstrap";
 import styled from "styled-components";
+
 import  "../App.css";
 // css 임포트할때는 뭐뭐 가 아니고 그냥 import App.css
 
 // context API 쓰려면 보관함 import
 import { Context1 } from './../App.js';
+import { addToCart } from '../store/userSlice.js';
+import { useSelector, useDispatch } from "react-redux";
 
 let YellowBtn = styled.button`
   background: yellow;
   color: black;
   padding: 10px;
 `;
+
 
 
 /* ========== Styled component 사용법 ==============================
@@ -185,7 +189,8 @@ function Detail(props) {
   
   */
 
-
+  let cartState = useSelector((state) => state);
+  let dispatch = useDispatch();
 
   let [count, setCount] = useState(0);
   let [activeTab, setActiveTab] = useState(0);
@@ -197,7 +202,7 @@ function Detail(props) {
   let foundProduct = props.shoes.find((product) => {
     return product.id === parseInt(id);
   });
-  console.log(foundProduct);
+  console.log(cartState);
 
   let [fade2, setFade2] = useState('');
   useEffect(()=>{
@@ -238,9 +243,6 @@ function Detail(props) {
         }}
       ></input>
 
-
-
-      
       <div className="row">
         <div className="col-md-6">
           <img
@@ -252,7 +254,13 @@ function Detail(props) {
           <h4 className="pt-5">{foundProduct.title}</h4>
           <p>{foundProduct.content}</p>
           <p>{foundProduct.price}원 {stock}</p>
-          <button className="btn btn-danger">주문하기</button>
+          <button className="btn btn-danger"
+          onClick={()=>{
+            dispatch(addToCart(foundProduct));
+          }}
+          
+          
+          >주문하기</button>
         </div>
       </div>
       <Nav variant="tabs"  defaultActiveKey="link0">

@@ -12,12 +12,20 @@ let cart = createSlice({
     increaseCount(state, action) {
       // 파라미터는 보통 action이라고 작명한다
 
-      let idx = state.findIndex((item) => item.id === action.payload);
-      if (idx !== -1) {
-        // jsx에서는 !==, === 을 권장함 (데이터 타입까지 일치)
-        state[idx].count++;
+      let idx = state.findIndex( (item ) => item.id === action.payload);
+      if(idx !== -1){
+        state[idx].count += 1;
       }
+      /* 이렇게 써서 틀림;;
+      let idx = state.findIndex( (item) => item.id === actions.id);
+      if(idx !== -1){
+        state[id].count++;
+      }
+      */
     },
+    addToCart(state,action){
+      state.push(action.payload);
+    }
   }
 });
 
@@ -92,4 +100,4 @@ export {user, cart };
 export let { changeName, changeAge } = user.actions;
 // 이 안에 객체 로 넣어야함!!!
 
-export let { increaseCount } = cart.actions;
+export let { increaseCount, addToCart } = cart.actions;
