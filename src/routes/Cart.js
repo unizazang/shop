@@ -67,6 +67,7 @@ function Cart() {
                 <td>
                   <button
                     onClick={() => {
+                      
                       dispatch(increaseCount(item.id));
                       /* 클릭하면 이 id 번째의 수량을 1 증가시킨다 */
                     }}

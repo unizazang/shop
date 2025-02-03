@@ -256,7 +256,9 @@ function Detail(props) {
           <p>{foundProduct.price}원 {stock}</p>
           <button className="btn btn-danger"
           onClick={()=>{
+           
             dispatch(addToCart(foundProduct));
+            console.log(cartState);
           }}
           
           

@@ -24,7 +24,21 @@ let cart = createSlice({
       */
     },
     addToCart(state,action){
-      state.push(action.payload);
+      let newData =   {
+        id: 0,
+        title: "White and Black",
+        content: "Born in France",
+        price: 120000,
+        img: "https://codingapple1.github.io/shop/shoes1.jpg",
+      };
+
+      let isNewOne = state.findIndex((item) => item.id === action.payload );
+            if(isNewOne !== -1){
+              state[isNewOne].count += 1;
+            } else{
+              state.push(newData);
+            }
+
     }
   }
 });

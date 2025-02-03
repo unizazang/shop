@@ -59,11 +59,19 @@ function App() {
             </Nav.Link>
             <Nav.Link
               onClick={() => {
-                navigate("/detail");
+                navigate("/detail/1");
                 // 여기 입력한 경로로 이동시켜줌
               }}
             >
               Detail
+            </Nav.Link>
+            <Nav.Link
+              onClick={() => {
+                navigate("/cart");
+                // 여기 입력한 경로로 이동시켜줌
+              }}
+            >
+              Cart
             </Nav.Link>
           </Nav>
         </Container>
