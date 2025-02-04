@@ -39,6 +39,9 @@ function App() {
   let [loading, setloading] = useState('false');
   let [stock, setStock] = useState([10,11,12]);
 
+  let [count, setCount] = useState(0);
+  let [age, setAge] = useState(20);
+
 
   let obj = {
     name: 'kim'
@@ -47,8 +50,34 @@ function App() {
 
   let 꺼낸것 = localStorage.getItem('data');
   console.log(꺼낸것);
+
+  useEffect(()=>{
+    // count < 3 ? setAge(age + 1) : null 
+    if(count !=0 && count < 3){
+      setAge(age + 1)
+    }
+  },[count]);
   return (
+
+    
     <div className="App">
+       <div>
+      <div>안녕하십니까 전 {age}</div>
+      <button onClick={()=>{
+          // count < 3 ? setCount(count + 1)
+          // return count < 3 ?
+          //   setCount(count + 1)
+          //   setAge(age + 1)
+          //   : null
+
+          setCount(count + 1);
+          // count < 3 ? setAge(age + 1) : null
+
+
+      }}>누르면한살먹기</button>
+
+
+    </div>
       {/* 갖다 쓰려면 component 를 import 해야함 */}
       <Navbar bg="dark" data-bs-theme="dark" className="nav">
         <Container>
