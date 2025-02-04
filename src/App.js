@@ -40,6 +40,13 @@ function App() {
   let [stock, setStock] = useState([10,11,12]);
 
 
+  let obj = {
+    name: 'kim'
+  };
+  localStorage.setItem('data', JSON.stringify(obj));
+
+  let 꺼낸것 = localStorage.getItem('data');
+  console.log(꺼낸것);
   return (
     <div className="App">
       {/* 갖다 쓰려면 component 를 import 해야함 */}
