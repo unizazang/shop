@@ -1,6 +1,6 @@
 import { Table } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
-import { changeName, changeAge, increaseCount } from "../store/userSlice.js";
+import { changeName, changeAge, increaseCount, decreaseCount } from "../store/userSlice.js";
 
 function Cart() {
   // redux store에 보관한 변수 꺼내쓰기 -----------------------
@@ -65,13 +65,19 @@ function Cart() {
                   <p className="item-price">{item.price.toLocaleString()}원</p>
                 </div>
                 <div className="item-quantity">
-                  <button className="quantity-btn" onClick={() => {}}>-</button>
+                  <button 
+                    className="quantity-btn" 
+                    onClick={() => {
+                      dispatch(decreaseCount(item.id));
+                    }}
+                  >
+                    -
+                  </button>
                   <span>{item.count}</span>
                   <button 
                     className="quantity-btn"
                     onClick={() => {
                       dispatch(increaseCount(item.id));
-                      /* 클릭하면 이 id 번째의 수량을 1 증가시킨다 */
                     }}
                   >
                     +

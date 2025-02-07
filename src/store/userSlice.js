@@ -23,6 +23,12 @@ let cart = createSlice({
       }
       */
     },
+    decreaseCount(state, action) {
+      let idx = state.findIndex((item) => item.id === action.payload);
+      if(idx !== -1 && state[idx].count > 1){
+        state[idx].count -= 1;
+      }
+    },
     addToCart(state, action){
       let idx = state.findIndex((item) => item.id === action.payload.id);
       if(idx !== -1){
@@ -109,4 +115,4 @@ export {user, cart };
 export let { changeName, changeAge } = user.actions;
 // 이 안에 객체 로 넣어야함!!!
 
-export let { increaseCount, addToCart } = cart.actions;
+export let { increaseCount, decreaseCount, addToCart } = cart.actions;
