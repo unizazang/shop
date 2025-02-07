@@ -29,17 +29,44 @@
 }
 
 .nav {
-  /* color: red !important; */
-  padding: 30px !important;
-  background-image: linear-gradient(white, black);
+  padding: 15px !important;
+  background: linear-gradient(to right, #2c3e50, #3498db) !important;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.navbar-brand {
+  font-weight: bold;
+  font-size: 1.5rem !important;
+  color: white !important;
+}
+
+.nav-link {
+  color: rgba(255,255,255,0.9) !important;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #f1c40f !important;
 }
 
 .main-bg {
-  height: 500px;
+  height: 400px;
   background-image: url("./img/캡처3.PNG");
   background-size: cover;
-  background-repeat: no-repeat;
   background-position: center;
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.main-bg::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.3);
 }
 
 .tab-visible{
@@ -74,6 +101,54 @@
 .white{
   background: #fff;
   transition: 0.5s all;
+}
+
+.container {
+  padding: 2rem 1rem;
+}
+
+.card {
+  border: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin-bottom: 2rem;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.card img {
+  height: 300px;
+  object-fit: cover;
+}
+
+.card-body {
+  padding: 1.5rem;
+}
+
+.card-title {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #2c3e50;
+}
+
+.card-text {
+  color: #666;
+  margin-bottom: 1rem;
+}
+
+.btn-primary {
+  background: #3498db;
+  border: none;
+  padding: 0.5rem 1.5rem;
+  transition: background 0.3s ease;
+}
+
+.btn-primary:hover {
+  background: #2980b9;
 }
 
 @keyframes App-logo-spin {

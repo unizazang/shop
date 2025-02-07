@@ -123,13 +123,35 @@ to = 경로 */}
           element={
             <>
               <div className="main-bg"></div>
-              <div class="container ">
-                <div className="row">
+              <Container>
+                <Row className="g-4">
                   {shoes.map((a, i) => {
-                    return <Product index={i} imgi={i+1} shoes={shoes}  key={i} />;
+                    return (
+                      <Col key={i} sm={6} md={4}>
+                        <div className="card h-100">
+                          <img
+                            src={`https://codingapple1.github.io/shop/shoes${i + 1}.jpg`}
+                            alt={a.title}
+                            className="card-img-top"
+                          />
+                          <div className="card-body d-flex flex-column">
+                            <h5 className="card-title">{a.title}</h5>
+                            <p className="card-text">{a.content}</p>
+                            <p className="card-text text-primary fw-bold mt-auto">₩{a.price.toLocaleString()}</p>
+                            <Button 
+                              variant="primary" 
+                              className="mt-2"
+                              onClick={() => navigate(`/detail/${i}`)}
+                            >
+                              상세보기
+                            </Button>
+                          </div>
+                        </div>
+                      </Col>
+                    );
                   })}
-                </div>
-              </div>
+                </Row>
+              </Container>
 
               {
                 loading == true ? 
@@ -240,9 +262,20 @@ to = 경로 */}
 
           fetch==================================
           fetch('URL')라는 js 기본 문법으로도 GET 요청이 가능
-          이렇게 할 때는 json을 그대로 출력해주기 때문에 array나 object로 변환해주는 과정이 필요
-          .then(결과 => 결과.json())     <<- 그래서 얘를 해줘야함
-          .then(data => {  })
+          이렇게 할 때는 json을 그대로 출력해줘서 객체나 배열이 잘 도착하는거
+
+          axios.get('URL')
+          .then((result)=>{
+            console.log(result.data);
+          })
+
+          fetch('URL')
+          .then((result)=>{
+            return result.json();
+          })
+          .then((data)=>{
+            console.log(data);
+          })
       */}
 
         <Route path="/detail/:id"  element={
@@ -451,4 +484,3 @@ react는 SPA라서 html파일을 하나밖에 사용을 안함 (index.html)
     2. 페이지 이동이 쉬움 (UI 스위치 조작이 쉬움)
 
 */
-
