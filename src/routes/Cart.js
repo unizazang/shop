@@ -30,70 +30,84 @@ function Cart() {
 
   let cart = useSelector((state) => state.cart);
 
+  // 장바구니 총액 계산
+  const calculateTotal = () => {
+    return cart.reduce((total, item) => total + (item.price * item.count), 0);
+  };
+
   return (
-    <div>
-      <h1>
-        {state.user.name} {state.user.age} 의 장바구니
-      </h1>
-      <button
-        onClick={() => {
-          // state.user.age = 30;
-          dispatch(changeAge(100));
-          // dispatch(()=>{ state.user.age ++ })
-          // dispatch() 안에 익명함수를 쓸 수 없음,
-          // reducers : 안에다가 쓰더라도 익명함수를 쓸 수 없음 : reducer함수여야 하기 때문
-        }}
-      >
-        {" "}
-        버튼{" "}
-      </button>
-      <Table>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>상품명</th>
-            <th>수량</th>
-            <th>변경하기</th>
-          </tr>
-        </thead>
-        <tbody>
-          {cart.map((item, i) => {
-            return (
-              <tr key={i}>
-                {/* key 속성은 여기 tr에 */}
-                <td>{item.id}</td>
-                <td>{item.name}</td>
-                <td>{item.count}</td>
-                <td>
-                  <button
+    <div className="cart-container">
+      <div className="cart-header">
+        <h2>장바구니</h2>
+        <p className="cart-user">
+          {state.user.name}님의 장바구니
+        </p>
+      </div>
+
+      {cart.length === 0 ? (
+        <div className="empty-cart">
+          <p>장바구니가 비어있습니다.</p>
+          <button className="shopping-button">쇼핑 계속하기</button>
+        </div>
+      ) : (
+        <>
+          <div className="cart-items">
+            {cart.map((item, i) => (
+              <div className="cart-item" key={i}>
+                <div className="item-image">
+                  <img 
+                    src="https://codingapple1.github.io/shop/shoes1.jpg" 
+                    alt={item.name}
+                  />
+                </div>
+                <div className="item-info">
+                  <h3>{item.name}</h3>
+                  <p className="item-price">{item.price.toLocaleString()}원</p>
+                </div>
+                <div className="item-quantity">
+                  <button className="quantity-btn" onClick={() => {}}>-</button>
+                  <span>{item.count}</span>
+                  <button 
+                    className="quantity-btn"
                     onClick={() => {
-                      
                       dispatch(increaseCount(item.id));
                       /* 클릭하면 이 id 번째의 수량을 1 증가시킨다 */
                     }}
                   >
-                    {" "}
-                    +{" "}
+                    +
                   </button>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-        {/* <tr> 
-                  <th>{cart[0].id}</th>
-                  <th>{cart[0].name}</th>
-                  <th>{cart[0].count}</th>
-                  <th>변경하기</th>
-                </tr>
+                </div>
+                <div className="item-total">
+                  {(item.price * item.count).toLocaleString()}원
+                </div>
+                <button className="remove-btn">
+                  <span>×</span>
+                </button>
+              </div>
+            ))}
+          </div>
 
-                <tr>
-                  <td>{cart[1].id}</td>
-                  <td>{cart[1].name}</td>
-                  <td>{cart[1].count}</td>
-                  <td>변경하기</td>
-                </tr> */}
-      </Table>
+          <div className="cart-summary">
+            <div className="summary-item">
+              <span>총 상품금액</span>
+              <span>{calculateTotal().toLocaleString()}원</span>
+            </div>
+            <div className="summary-item">
+              <span>배송비</span>
+              <span>{calculateTotal() >= 50000 ? '무료' : '3,000원'}</span>
+            </div>
+            <div className="summary-total">
+              <span>결제예정금액</span>
+              <span>
+                {(calculateTotal() + (calculateTotal() >= 50000 ? 0 : 3000)).toLocaleString()}원
+              </span>
+            </div>
+            <button className="checkout-button">
+              주문하기
+            </button>
+          </div>
+        </>
+      )}
     </div>
   );
 }

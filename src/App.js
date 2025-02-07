@@ -62,7 +62,7 @@ function App() {
     
     <div className="App">
        <div>
-      <div>안녕하십니까 전 {age}</div>
+      {/* <div>안녕하십니까 전 {age}</div>
       <button onClick={()=>{
           // count < 3 ? setCount(count + 1)
           // return count < 3 ?
@@ -74,42 +74,29 @@ function App() {
           // count < 3 ? setAge(age + 1) : null
 
 
-      }}>누르면한살먹기</button>
+      }}>누르면한살먹기</button> */}
 
 
     </div>
       {/* 갖다 쓰려면 component 를 import 해야함 */}
-      <Navbar bg="dark" data-bs-theme="dark" className="nav">
+      <Navbar className="modern-nav">
         <Container>
-          <Navbar.Brand href="#home">C Shop</Navbar.Brand>
-          <Nav className="me-auto">
-            <Nav.Link
-              onClick={() => {
-                navigate("/");
-                // 여기 입력한 경로로 이동시켜줌
-                // navigate(1) > 앞으로 한 페이지 이동해주세요
-                // navigate(-1) > 뒤로 한 페이지 이동해주세요 (뒤로가기)
-              }}
-            >
-              HOME
-            </Nav.Link>
-            <Nav.Link
-              onClick={() => {
-                navigate("/detail/1");
-                // 여기 입력한 경로로 이동시켜줌
-              }}
-            >
-              Detail
-            </Nav.Link>
-            <Nav.Link
-              onClick={() => {
-                navigate("/cart");
-                // 여기 입력한 경로로 이동시켜줌
-              }}
-            >
-              Cart
-            </Nav.Link>
+          <Navbar.Brand as={Link} to="/" className="nav-brand">
+            <span className="brand-text">ShoeShop</span>
+          </Navbar.Brand>
+          <Nav className="nav-links">
+            <Nav.Link as={Link} to="/" className="nav-link">Home</Nav.Link>
+            <Nav.Link as={Link} to="/cart" className="nav-link">Cart</Nav.Link>
+            <Nav.Link as={Link} to="/detail/0" className="nav-link">Detail</Nav.Link>
           </Nav>
+          <div className="nav-right">
+            <button className="search-btn">
+              <span className="material-icons">search</span>
+            </button>
+            <button className="cart-btn">
+              <span className="material-icons">shopping_bag</span>
+            </button>
+          </div>
         </Container>
       </Navbar>
 
@@ -158,61 +145,61 @@ to = 경로 */}
                 <Loading></Loading> : null
 
               }
-              <button onClick={()=>{
-                // clicked++; 이게 패인이었다!!!
-                setClicked(++clicked);
-                setloading(true);
+              <div className="d-grid gap-2 col-6 mx-auto my-4">
+                <Button 
+                  variant="outline-primary"
+                  size="lg"
+                  onClick={()=>{
+                    // clicked++; 이게 패인이었다!!!
+                    setClicked(++clicked);
+                    setloading(true);
 
-                if(clicked == 1){
-                  axios.get('https://codingapple1.github.io/shop/data2.json')
-                  .then((result)=>{
-                   
-                    let cpy = [...shoes, ...result.data];
-                    // 여기서 cpy = [...shoes, result.data] 이렇게 쓰면 concat 으로 합치지 않아도 바로 같이 배열에 담김!!!
-  
-  
-                    // 여기서 실수한 부분!!!!!!!!!!!!!!!!!!!!!1
-                    // [...shoes, result.data]; 이렇게 담았는데 이게아니라 result.data도 풀었어야 함. ...result.data 로!!!!
-  
-                    
-                    // cpy.push(result.data); //result가 아니고 result.data를 넣어야 제대로 들어간 거였음 ,
-                    // + 저렇게 위에서 합쳐버렸으니까 push 를 할 필요가 없음!!!!!
-                    setShoes(cpy);
-                    // console.log("Updated shoes:", cpy); // 상태 업데이트 확인
+                    if(clicked == 1){
+                      axios.get('https://codingapple1.github.io/shop/data2.json')
+                      .then((result)=>{
+                       
+                        let cpy = [...shoes, ...result.data];
+                        // 여기서 cpy = [...shoes, result.data] 이렇게 쓰면 concat 으로 합치지 않아도 바로 같이 배열에 담김!!!
+      
+      
+                        // 여기서 실수한 부분!!!!!!!!!!!!!!!!!!!!!1
+                        // [...shoes, result.data]; 이렇게 담았는데 이게아니라 result.data도 풀었어야 함. ...result.data 로!!!!
+      
+                        
+                        // cpy.push(result.data); //result가 아니고 result.data를 넣어야 제대로 들어간 거였음 ,
+                        // + 저렇게 위에서 합쳐버렸으니까 push 를 할 필요가 없음!!!!!
+                        setShoes(cpy);
+                        // console.log("Updated shoes:", cpy); // 상태 업데이트 확인
 
-                    // 로딩중 UI는 성공했을 때 지우면 됨!!!
-                    setTimeout(()=>{
+                        // 로딩중 UI는 성공했을 때 지우면 됨!!!
+                        setTimeout(()=>{
+                          setloading(false);
+                        }, 2000)
+                      })
+                      .catch(()=>{
+                        console.log('실패');
+                        setloading(false);
+                      })
+                    }
+                    else if(clicked == 2){
+                      axios.get('https://codingapple1.github.io/shop/data3.json')
+                      .then((result1)=>{
+                        let cpy = [...shoes, ...result1.data];
+                        setShoes(cpy);
+                        setloading(false);
+                      })
+                      .catch(()=>{
+                        console.log('실패');
+                        setloading(false);
+                      })
+                    } else if(clicked >= 3){
+                      alert('상품이 없습니다.');
                       setloading(false);
-                    }, 2000)
-                  }
-                    
-                  )
-                  .catch(()=>{
-                    console.log('실패');
-                    setloading(false);
-                  })
-                }
-                else if(clicked == 2){
-                  axios.get('https://codingapple1.github.io/shop/data3.json')
-                  .then((result1)=>{
-                    let cpy = [...shoes, ...result1.data];
-                    setShoes(cpy);
-                    setloading(false);
-                  })
-                  .catch(()=>{
-                    console.log('실패');
-                    setloading(false);
-                  })
-                } else if(clicked >= 3){
-                  alert('상품이 없습니다.');
-                  setloading(false);
-                  
-                }
-
-                
-                
-                
-              }}>버튼</button>
+                    }
+                }}>
+                  More Shoes
+                </Button>
+              </div>
             </>
           }
         />
@@ -370,23 +357,21 @@ to = 경로 */}
 
 function Loading(){
   return(
-    <div
-      className="modal show"
-      style={{ display: 'block', position: 'initial' }}
-    >
-      <Modal.Dialog>
-        <Modal.Header closeButton>
-          <Modal.Title>로딩</Modal.Title>
+    <div className="loading-container">
+      <div className="loading-backdrop"></div>
+      <Modal.Dialog className="loading-dialog">
+        <Modal.Header>
+          <Modal.Title>Loading</Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
-          <p>로딩 중입니다. 잠시만 기다려 주세요...</p>
+          <div className="d-flex align-items-center">
+            <div className="spinner-border text-primary me-3" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </div>
+            <p className="mb-0">상품을 불러오는 중...</p>
+          </div>
         </Modal.Body>
-
-        <Modal.Footer>
-          <Button variant="secondary">Close</Button>
-          <Button variant="primary">Save changes</Button>
-        </Modal.Footer>
       </Modal.Dialog>
     </div>
   )

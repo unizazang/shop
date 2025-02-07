@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
-import { Nav } from "react-bootstrap";
+import { Nav, Tab } from "react-bootstrap";
 import styled from "styled-components";
 
 import  "../App.css";
@@ -222,104 +222,182 @@ function Detail(props) {
     상품id가 0인 걸 보여주면 좋을 듯.
   */
   return foundProduct ? (
-    <div className={"container black "+ fade2}>
+    <div className={"product-detail "+ fade2}>
       {
-        visible == true ? <div className="alert alert-warning">
-        2초 이내 구매시 할인
-      </div> 
-      //이렇게 그냥 안에다가 html 넣어도 됨.
-      : null
+        visible == true ? 
+        <div className="sale-alert">
+          🎉 2초 이내 구매시 할인
+        </div> 
+        : null
       }
-      <YellowBtn onClick={()=>{
-          setA(a + 1);
-      }}>버튼</YellowBtn>
-      <input
-        type="text"
-        onChange={(e) => {
-          const value = e.target.value.trim(); // 입력 값 앞뒤 공백 제거
-          if (value === "" || isNaN(Number(value))) {
-            setNum(1); // 숫자가 아니면 상태 변경
-          }
-        }}
-      ></input>
-
+      
       <div className="row">
         <div className="col-md-6">
           <img
             src="https://codingapple1.github.io/shop/shoes1.jpg"
             width="100%"
+            className="product-image"
+            alt={foundProduct.title}
           />
         </div>
         <div className="col-md-6">
-          <h4 className="pt-5">{foundProduct.title}</h4>
-          <p>{foundProduct.content}</p>
-          <p>{foundProduct.price}원 {stock}</p>
-          <button className="btn btn-danger"
-          onClick={()=>{
-           
-            dispatch(addToCart(foundProduct));
-            console.log(cartState);
-          }}
-          
-          
-          >주문하기</button>
+          <div className="product-info">
+            <h4 className="product-title">{foundProduct.title}</h4>
+            <p className="product-content">{foundProduct.content}</p>
+            <p className="product-price">{foundProduct.price.toLocaleString()}원</p>
+            <button 
+              className="order-button"
+              onClick={()=>{
+                dispatch(addToCart(foundProduct));
+                console.log(cartState);
+              }}
+            >
+              장바구니에 담기
+            </button>
+          </div>
         </div>
       </div>
-      <Nav variant="tabs"  defaultActiveKey="link0">
-          {
-            tabContent.map((_, i)=>{
-              return <Tab i={i} btnIdx={i+1} activeTab={activeTab} setActiveTab={setActiveTab} />
-              // 자꾸 빼먹는데 여기서 return 빼먹지마 ㅡㅡ
-            })
-          }
-      </Nav>
-        
-      {/* <div>{tabContent[activeTab]}</div> */}
-          {/* <TabContent className=" end" /> 여기가 아니라 그 자식한테 부착해줘야 되는거였음 */}
-          <TabContent activeTab={activeTab} />
+
+      <div className="tab-container">
+        <Nav variant="tabs" defaultActiveKey="link0">
+          {[0,1,2,3].map((i)=>{
+            return <CustomTab key={i} i={i} btnIdx={i+1} activeTab={activeTab} setActiveTab={setActiveTab} />
+          })}
+        </Nav>
+
+        <div className="tab-content">
+          <TabContent activeTab={activeTab} product={foundProduct} />
+        </div>
+      </div>
     </div>
   ) : (
-    <div>상품을 찾을 수 없ㅅ브니다.</div>
+    <div className="container text-center py-5">
+      <h3>상품을 찾을 수 없습니다.</h3>
+      <p>요청하신 상품이 존재하지 않거나 삭제되었을 수 있습니다.</p>
+    </div>
   );
 }
 
-function Tab(props){
+function CustomTab(props){
   return(
     <Nav.Item>
       <Nav.Link eventKey={`link${props.i}`}
       onClick={()=>{
         props.setActiveTab(props.i);
       }}
-      >{'버튼'+ props.btnIdx}</Nav.Link>
+      >
+      {
+        props.i === 0 ? '상품정보' :
+        props.i === 1 ? '상세이미지' :
+        props.i === 2 ? '배송/교환/반품' :
+        '상품후기'
+      }
+      </Nav.Link>
     </Nav.Item>
   )
 }
-// 이전에 좃뺑이 친거는 detail 좃뺑이 js 에 있음
 
-
-//트랜지션 연습용
-function TabContent({activeTab}){
-
-  let {stock} = useContext(Context1); // 이 한줄은 추가해줘야 가능
+function TabContent({activeTab, product}){
   let [fade, setFade] = useState('');
-  useEffect(()=>{
-    let timer = setTimeout(()=>{
-      setFade('end')
-    },1000)
-    // automatic batching 때문에 state 다 변경하고 나서 마지막에 반영(재랜더링)함
-    // 그래서 실행 시점을 미뤄줘야 정상적으로 동작
 
-    return () => {
-      setFade(''); // 얘가 먼저 실행됨
-      clearTimeout(timer)
+  useEffect(()=>{
+    // 리액트 18버전 automatic batching 때문에 시간차 약간 줘야함
+    let timer = setTimeout(()=>{ setFade('end') }, 100);
+    return ()=>{
+      clearTimeout(timer);
+      setFade('');
     }
-  },activeTab)
+  }, [activeTab]);
+
+  const renderContent = () => {
+    switch(activeTab) {
+      case 0:
+        return (
+          <div className="product-details">
+            <h3>제품 특징</h3>
+            <ul>
+              <li>프리미엄 가죽 소재 사용</li>
+              <li>편안한 착화감을 위한 쿠션 인솔</li>
+              <li>내구성이 뛰어난 고무 아웃솔</li>
+              <li>다양한 스타일링이 가능한 디자인</li>
+            </ul>
+            <h3>소재</h3>
+            <p>겉감: 천연가죽 100%<br/>안감: 면 100%<br/>창: 고무</p>
+          </div>
+        );
+      case 1:
+        return (
+          <div className="product-images">
+            <div className="row">
+              <div className="col-md-12 mb-4">
+                <img 
+                  src="https://codingapple1.github.io/shop/shoes1.jpg" 
+                  className="img-fluid detail-image" 
+                  alt="상품 상세 이미지"
+                />
+              </div>
+              <div className="col-md-6 mb-4">
+                <img 
+                  src="https://codingapple1.github.io/shop/shoes2.jpg" 
+                  className="img-fluid detail-image" 
+                  alt="상품 착용 이미지"
+                />
+              </div>
+              <div className="col-md-6 mb-4">
+                <img 
+                  src="https://codingapple1.github.io/shop/shoes3.jpg" 
+                  className="img-fluid detail-image" 
+                  alt="상품 착용 이미지"
+                />
+              </div>
+            </div>
+          </div>
+        );
+      case 2:
+        return (
+          <div className="shipping-info">
+            <h3>배송 안내</h3>
+            <p>- 배송비: 3,000원 (50,000원 이상 구매 시 무료배송)<br/>
+               - 배송방법: CJ대한통운<br/>
+               - 평균 배송기간: 2-3일 (주말/공휴일 제외)</p>
+            
+            <h3>교환/반품 안내</h3>
+            <p>- 교환/반품 기간: 상품 수령 후 7일 이내<br/>
+               - 교환/반품 배송비: 6,000원 (왕복)<br/>
+               - 교환/반품 불가 사유: 착용한 상품, 포장 훼손, 세탁한 상품</p>
+          </div>
+        );
+      case 3:
+        return (
+          <div className="reviews">
+            <div className="review-item">
+              <div className="review-header">
+                <span className="reviewer">김**</span>
+                <span className="rating">★★★★★</span>
+                <span className="date">2025.02.07</span>
+              </div>
+              <p className="review-content">정말 편하고 디자인도 예뻐요! 사이즈도 딱 맞습니다.</p>
+            </div>
+            <div className="review-item">
+              <div className="review-header">
+                <span className="reviewer">이**</span>
+                <span className="rating">★★★★☆</span>
+                <span className="date">2025.02.06</span>
+              </div>
+              <p className="review-content">배송이 빠르고 품질도 좋네요. 다만 생각보다 조금 작은 느낌이에요.</p>
+            </div>
+          </div>
+        );
+      default:
+        return null;
+    }
+  };
+
   return (
-    <div className={"start box " + fade}>
-      { [<div>{stock}</div>, <div>내용2</div>, <div>내용3</div>][activeTab] }
+    <div className={'start ' + fade}>
+      {renderContent()}
     </div>
   )
 }
 
 export default Detail;
-

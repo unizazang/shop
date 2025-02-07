@@ -3,8 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 let cart = createSlice({
   name: "cart",
   initialState: [
-    { id: 0, name: "White and Black", count: 2 },
-    { id: 2, name: "Grey Yordan", count: 1 },
+    { id: 0, name: "White and Black", count: 2, price: 120000 },
+    { id: 2, name: "Grey Yordan", count: 1, price: 130000 },
   ],
   // 초기값을 여기 넣는 거임
 
@@ -23,22 +23,18 @@ let cart = createSlice({
       }
       */
     },
-    addToCart(state,action){
-      let newData =   {
-        id: 0,
-        title: "White and Black",
-        content: "Born in France",
-        price: 120000,
-        img: "https://codingapple1.github.io/shop/shoes1.jpg",
-      };
-
-      let isNewOne = state.findIndex((item) => item.id === action.payload );
-            if(isNewOne !== -1){
-              state[isNewOne].count += 1;
-            } else{
-              state.push(newData);
-            }
-
+    addToCart(state, action){
+      let idx = state.findIndex((item) => item.id === action.payload.id);
+      if(idx !== -1){
+        state[idx].count += 1;
+      } else {
+        state.push({
+          id: action.payload.id,
+          name: action.payload.title,
+          count: 1,
+          price: action.payload.price
+        });
+      }
     }
   }
 });
@@ -80,7 +76,6 @@ let user = createSlice({
     user.actions < 하면 reducers : { 여기 있는 애들이 남는다 }
 
     변수 선언하고 내보내야 되는데 관습적으로 이렇게 씀
-    export 하고싶은 함수명들을 이렇게 다 적어줌
     export let { changeName , func1 , func2 } = user.actions 이런 식으로 쓴다
 
     이것도 destructuring 문법임
